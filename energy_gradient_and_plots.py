@@ -464,7 +464,7 @@ def plotNetwork(springs,pos,i):
 		y2 = pos[two+num]
 		
 		plt.plot([x1,x2],[y1,y2],color='k')
-	plt.savefig(str(i)+'png')
+	plt.savefig('render/'+str(i)+'.png')
 
 
 def Energy(x):
@@ -521,16 +521,17 @@ def gradE(x):
 	
 	grad[0]=0
 	grad[0+num]=0
-	grad[1]=0
-	grad[1+num]=0
-	grad[2]=0
-	grad[2+num]=0
-	grad[5]=0
-	grad[5+num]=0
+	# ~ grad[1]=0
+	# ~ grad[1+num]=0
+	# ~ grad[2]=0
+	# ~ grad[2+num]=0
+	# ~ grad[5]=0
+	# ~ grad[5+num]=0
 	
 	return grad
  
 for i in range (50):
-	x0[5] += i*0.1
-	springs = NonlinearCG(Energy,gradE,init=x0,tol=1e-4,max_iter=1000,method='FR')
+	x0[5] += 0.1*i
+	xs, ys = NonlinearCG(Energy,gradE,init=x0,tol=1e-4,max_iter=1000,method='FR')
+	x0 = xs[-1]
 	plotNetwork(springs, x0, i)
