@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -154,7 +154,6 @@ def WolfeLineSearch2(phi, derphi, c1=1e-4, c2=0.9, amax=None, maxiter=20):
 
     return alpha_star, phi_star, derphi_star
 
-
 def _cubicmin(a, fa, fpa, b, fb, c, fc):
     """
     Finds the minimizer for a cubic polynomial that goes through the
@@ -185,7 +184,6 @@ def _cubicmin(a, fa, fpa, b, fb, c, fc):
         return None
     return xmin
 
-
 def _quadmin(a, fa, fpa, b, fb):
     """
     Finds the minimizer for a quadratic polynomial that goes through
@@ -204,7 +202,6 @@ def _quadmin(a, fa, fpa, b, fb):
     if not np.isfinite(xmin):
         return None
     return xmin
-
 
 def _zoom(a_lo, a_hi, phi_lo, phi_hi, derphi_lo,
           phi, derphi, phi0, derphi0, c1, c2):
@@ -284,9 +281,6 @@ def _zoom(a_lo, a_hi, phi_lo, phi_hi, derphi_lo,
             valprime_star = None
             break
     return a_star, val_star, valprime_star
-
-
-    
 
 def NonlinearCG(f, f_grad, init, method='FR', c1=1e-4, c2=0.1, amax=None, tol=1e-7, max_iter=1000):
     """Non Linear Conjugate Gradient Method for optimization problem.
@@ -382,7 +376,6 @@ def NonlinearCG(f, f_grad, init, method='FR', c1=1e-4, c2=0.1, amax=None, tol=1e
     
     return np.array(curve_x), np.array(curve_y)
   
-  
 def create_mesh(f):
     x = np.arange(-5, 5, 0.025)
     y = np.arange(-5, 5, 0.025)
@@ -405,9 +398,6 @@ def plot_contour(ax, X, Y, Z):
     ax.clabel(CS, fontsize='smaller', fmt='%1.2f')
     ax.axis('square')
     return ax
-    
-   
-    
 
 def plot_value(ax):
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
@@ -464,7 +454,10 @@ def plotNetwork(springs,pos,i):
 		one = spring[0]
 		two = spring[1]
 		
-			
+		print("the length = " + str(len(pos)))
+		print(num+two)
+		print(one)
+		print(two)
 		x1 = pos[one]
 		x2 = pos[two]
 		y1 = pos[one+num]
@@ -537,7 +530,7 @@ def gradE(x):
 	
 	return grad
  
- 
-
-NonlinearCG(Energy,gradE,init=x0,tol=1e-4,max_iter=1000,method='FR')
-plotNetwork(springs, x0, 1)
+for i in range (50):
+	x0[5] += i*0.1
+	springs = NonlinearCG(Energy,gradE,init=x0,tol=1e-4,max_iter=1000,method='FR')
+	plotNetwork(springs, x0, i)
