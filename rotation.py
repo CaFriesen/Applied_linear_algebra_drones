@@ -8,7 +8,7 @@ springs = [[0,1],[1,2],[0,3],[1,3],[1,4],[2,4],[3,4],[3,5],[4,5]]
 x0 = np.array([0,1,2,0.5,1.5,1,0,0,0,.5*np.sqrt(3),.5*np.sqrt(3),np.sqrt(3)],)
 a = 1
 b = 0
-rustlengte = 1
+rustlengte = 2
 def WolfeLineSearch(f, f_grad, xk, pk, c1=1e-4, c2=0.9, amax=None, maxiter=20):
     """
     Find alpha that satisfies strong Wolfe conditions.
@@ -450,6 +450,8 @@ def plotNetwork(springs,pos,i):
 	num  = int(len(pos)/2)
 	
 	fig,ax = plt.subplots()
+	x = [0,6]
+	y = [0,6]
 	
 	for spring in springs:
 		one = spring[0]
@@ -520,22 +522,20 @@ def gradE(x):
 		grad[one+num]-=dy*(dist-rustlengte)/dist
 		grad[two+num]+=dy*(dist-rustlengte)/dist
 	
+	# vastzetten van punten
 	grad[0]=0
 	grad[0+num]=0
-	# ~ grad[1]=0
-	# ~ grad[1+num]=0
-	# ~ grad[2]=0
-	# ~ grad[2+num]=0
-	# ~ grad[5]=0
-	# ~ grad[5+num]=0
-	
-	
+
 	return grad
 
-for i in range (50):
-	if x0[11] <= -1:
-		a = -1
+for i in range (80):
+	# Naar rechnts roteren totdat bepaald punt is bereikt
+	# Daarna gaat het naar links roteren
+	if x0[11] <= -(rustlengte):
+		a = -1 
 		b = x0[5]
+	
+	# Roteren door punt 5 de x en y waarde vergroten of te verkleinen
 	x0[5] += a*0.1*i + b
 	x0[11] -= a*0.1*i + b
 
